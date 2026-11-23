@@ -1,0 +1,46 @@
+# Universe for the alt-data KPI nowcast (DESIGN.md §4).
+# status: included -> included | excluded after `nowcast check-universe`. Exclusions stay listed with a reason.
+# Locked 2026-11-23 after the M1 data check (reports/universe_check.md): all 12 candidates pass.
+data_window:
+  pageviews_start: 2015-07-01   # earliest Wikimedia REST pageviews
+  pageviews_end: 2026-11-22     # fixed so cache keys (and results) are reproducible
+criteria:
+  min_overlap_quarters: 24
+  min_coverage: 0.95            # share of days in the fiscal quarter with pageview data
+  min_median_daily_views: 100   # article sanity check (catches redirects / wrong titles)
+tickers:
+  - {ticker: NFLX, cik: 1065280, article: Netflix, status: included,
+     rationale: "Single-product subscription streaming; the article is the service itself."}
+  - {ticker: CMG, cik: 1058090, article: Chipotle Mexican Grill, status: included,
+     note: "Pre-2017 revenue is tagged FoodAndBeverageRevenue (outside the §7.1 concept list), so history starts 2016Q4.",
+     rationale: "Single-brand fast-casual chain; company article (not the chipotle pepper)."}
+  - {ticker: ETSY, cik: 1370637, article: Etsy, status: included,
+     rationale: "Marketplace whose name is the consumer product; revenue tracks marketplace activity."}
+  - {ticker: LULU, cik: 1397187, article: Lululemon, status: included,
+     note: "Fiscal year ends ~Jan 31; pageviews summed across pre/post-move titles.",
+     article_aliases: [Lululemon Athletica],  # moved to "Lululemon" 2025-03-09
+     rationale: "Single-brand athletic apparel; consumer brand interest plausibly leads sales."}
+  - {ticker: SHAK, cik: 1620533, article: Shake Shack, status: included,
+     rationale: "Single-brand restaurant chain, unit growth driven."}
+  - {ticker: WING, cik: 1636222, article: Wingstop, status: included,
+     rationale: "Single-brand restaurant chain; franchise model (revenue = royalties + company stores)."}
+  - {ticker: PLNT, cik: 1637207, article: Planet Fitness, status: included,
+     rationale: "Single-brand gym chain; membership-driven revenue."}
+  - {ticker: SNAP, cik: 1564408, article: Snapchat, status: included,
+     rationale: "Product article (Snapchat), which is the revenue engine, rather than Snap Inc."}
+  - {ticker: PINS, cik: 1506293, article: Pinterest, status: included,
+     rationale: "Single-product ad-supported platform; the article is the product."}
+  - {ticker: PTON, cik: 1639825, article: Peloton Interactive, status: included,
+     note: "Fiscal year ends Jun 30; company article only from 2018-08; hardware + subscription mix.",
+     # Peloton (company) -> Peloton (exercise equipment company) -> Peloton Interactive (2022-01-24)
+     article_aliases: [Peloton (exercise equipment company), Peloton (company)],
+     rationale: "Connected fitness hardware + subscription under one brand."}
+  - {ticker: ZM, cik: 1585521, article: Zoom (software), status: included,
+     note: "Fiscal year ends Jan 31; mostly B2B after 2020, so a weaker consumer-interest proxy; COVID surge dominates.",
+     # product page split out in 2020; before that interest landed on the company page,
+     # which moved Zoom Video Communications -> Zoom Communications on 2024-11-26
+     article_aliases: [Zoom Video Communications, Zoom Communications],
+     rationale: "Product article; 'Zoom Video Communications' is the corporate page."}
+  - {ticker: RBLX, cik: 1315098, article: Roblox, status: included,
+     note: "Borderline (27 qtrs): 2020 quarters first filed as post-IPO comparatives in 2021.",
+     rationale: "Single-product platform; likely too short a public history (IPO 2021)."}

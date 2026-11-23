@@ -1,0 +1,28 @@
+{
+  "cik": 1065280,
+  "entityName": "NETFLIX INC",
+  "facts": {
+    "dei": {
+      "EntityCommonStockSharesOutstanding": {"units": {"shares": [
+        {"end": "2018-04-13", "val": 434000000, "accn": "0001065280-18-000020", "fy": 2018, "fp": "Q1", "form": "10-Q", "filed": "2018-04-18"}
+      ]}}
+    },
+    "us-gaap": {
+      "Revenues": {"label": "Revenues", "units": {"USD": [
+        {"start": "2017-01-01", "end": "2017-03-31", "val": 2636635000, "accn": "0001065280-17-000017", "fy": 2017, "fp": "Q1", "form": "10-Q", "filed": "2017-04-19", "frame": "CY2017Q1"},
+        {"start": "2017-01-01", "end": "2017-03-31", "val": 2636635000, "accn": "0001065280-18-000020", "fy": 2018, "fp": "Q1", "form": "10-Q", "filed": "2018-04-18"},
+        {"start": "2017-01-01", "end": "2017-03-31", "val": 2636635000, "accn": "0001065280-18-000020", "fy": 2018, "fp": "Q1", "form": "10-Q", "filed": "2018-04-18"},
+        {"start": "2017-01-01", "end": "2017-12-31", "val": 11692713000, "accn": "0001065280-18-000006", "fy": 2017, "fp": "FY", "form": "10-K", "filed": "2018-01-29", "frame": "CY2017"}
+      ]}},
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {"label": "Revenue", "units": {"USD": [
+        {"start": "2018-01-01", "end": "2018-03-31", "val": 3700856000, "accn": "0001065280-18-000020", "fy": 2018, "fp": "Q1", "form": "10-Q", "filed": "2018-04-18", "frame": "CY2018Q1"}
+      ]}},
+      "CostOfRevenue": {"label": "Cost", "units": {"USD": [
+        {"start": "2018-01-01", "end": "2018-03-31", "val": 2197075000, "accn": "0001065280-18-000020", "fy": 2018, "fp": "Q1", "form": "10-Q", "filed": "2018-04-18"}
+      ]}},
+      "SalesRevenueNet": {"label": "Sales", "units": {"EUR": [
+        {"start": "2018-01-01", "end": "2018-03-31", "val": 1, "accn": "0001065280-18-000020", "fy": 2018, "fp": "Q1", "form": "10-Q", "filed": "2018-04-18"}
+      ]}}
+    }
+  }
+}

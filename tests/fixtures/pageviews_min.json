@@ -1,0 +1,5 @@
+{"items": [
+  {"project": "en.wikipedia", "article": "Zoom_(software)", "granularity": "daily", "timestamp": "2020030100", "access": "all-access", "agent": "user", "views": 1200},
+  {"project": "en.wikipedia", "article": "Zoom_(software)", "granularity": "daily", "timestamp": "2020030200", "access": "all-access", "agent": "user", "views": 1350},
+  {"project": "en.wikipedia", "article": "Zoom_(software)", "granularity": "daily", "timestamp": "2020030400", "access": "all-access", "agent": "user", "views": 98000}
+]}
