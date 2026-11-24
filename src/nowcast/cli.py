@@ -167,6 +167,38 @@ def cmd_ingest_releases(args, settings) -> int:
     return 0
 
 
+def cmd_extract(args, settings) -> int:
+    import anthropic
+    from dotenv import load_dotenv
+
+    from nowcast.agent.run_extract import report, run
+
+    load_dotenv(PROJECT_ROOT / ".env", override=False)  # the SDK reads ANTHROPIC_API_KEY from the environment
+
+    con = connect(settings.db_path)
+    init_schema(con)
+    client = None if settings.offline else anthropic.Anthropic()
+    ext, guide, q, calls = run(con, client, args.model, settings.cache_dir, args.sample)
+    con.execute("DELETE FROM llm_extractions WHERE model = ?", [args.model])
+    replace_rows(con, "llm_extractions", ext, key_col="model", keys=[args.model])
+    replace_rows(con, "guidance", guide, key_col="extracted_by", keys=[args.model])
+    n_all = con.execute("SELECT count(*) FROM raw_releases WHERE text IS NOT NULL AND period_end IS NOT NULL").fetchone()[0]
+    md = report(ext, guide, q, args.model, n_all, calls)
+    out = PROJECT_ROOT / "reports" / "extraction_m4.md"
+    out.write_text(md)
+    print(md)
+    return 0
+
+
+def cmd_charts(args, settings) -> int:
+    from nowcast.charts import make_all
+
+    con = connect(settings.db_path)
+    for path in make_all(con, PROJECT_ROOT / "reports" / "figures"):
+        log.info("wrote %s", path.relative_to(PROJECT_ROOT))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     p = argparse.ArgumentParser(prog="nowcast")
@@ -176,6 +208,10 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("check-universe", help="data check against the §4 criteria")
     sub.add_parser("build", help="M2: quarters, restatements, features tables")
     sub.add_parser("ingest-releases", help="M4: 8-K Item 2.02 earnings releases (EX-99.1) -> raw_releases")
+    exp = sub.add_parser("extract", help="M4: LLM extraction of revenue, KPIs and guidance from releases")
+    exp.add_argument("--sample", type=int, default=None, help="pilot: stratified sample size (default: all)")
+    exp.add_argument("--model", default="claude-haiku-5-5")
+    sub.add_parser("charts", help="render README figures to reports/figures/")
     sub.add_parser("evaluate", help="M3: walk-forward evaluation of every pre-registered spec")
     sc = sub.add_parser("spot-check", help="print recent quarters for manual checks against 10-Qs")
     sc.add_argument("tickers", nargs="+")
@@ -184,7 +220,8 @@ def main(argv: list[str] | None = None) -> int:
     settings = load_settings()
     return {"ingest": cmd_ingest, "check-universe": cmd_check_universe,
             "build": cmd_build, "spot-check": cmd_spot_check,
-            "evaluate": cmd_evaluate, "ingest-releases": cmd_ingest_releases}[args.cmd](args, settings)
+            "evaluate": cmd_evaluate, "ingest-releases": cmd_ingest_releases,
+            "extract": cmd_extract, "charts": cmd_charts}[args.cmd](args, settings)
 
 
 if __name__ == "__main__":

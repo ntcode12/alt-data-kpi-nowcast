@@ -40,6 +40,16 @@ CREATE TABLE IF NOT EXISTS predictions (
 CREATE TABLE IF NOT EXISTS raw_releases (
     ticker VARCHAR, accn VARCHAR PRIMARY KEY, filed DATE, period_end DATE, exhibit VARCHAR, text VARCHAR
 );
+CREATE TABLE IF NOT EXISTS llm_extractions (
+    ticker VARCHAR, accn VARCHAR, period_end DATE, model VARCHAR, revenue_reported_usd DOUBLE,
+    revenue_verified BOOLEAN, n_kpis INTEGER, n_kpis_verified INTEGER, n_guidance INTEGER,
+    n_guidance_verified INTEGER, error VARCHAR, input_tokens INTEGER, output_tokens INTEGER, json VARCHAR
+);
+CREATE TABLE IF NOT EXISTS guidance (
+    ticker VARCHAR, fiscal_q VARCHAR, target_end DATE, base_period_end DATE, target_period VARCHAR,
+    guide_low DOUBLE, guide_high DOUBLE, guide_mid DOUBLE, source_accn VARCHAR, source_filed DATE,
+    extracted_by VARCHAR
+);
 CREATE TABLE IF NOT EXISTS raw_site_pageviews (date DATE PRIMARY KEY, views BIGINT);
 """
 
